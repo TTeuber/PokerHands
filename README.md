@@ -18,10 +18,10 @@ Creates a series of scores for a hand in this order:
 3. Rank of card(s) not in scoring hand in descending order
 
 ### Example Scoring for a hand of `2H 2D 5S 5C KD`: 
-- Hand Rank: [ 3 ]
-- Scoring Ranks: [ 5, 2 ], 
-- Non-Scoring Ranks: [ 13 ]
-- Final Scores: [ 3, 5, 2, 13 ]
+- Hand Rank: [ 3 ] (Two Pair Rank)
+- Scoring Ranks: [ 5, 2 ] (High Pair Rank, Low Pair Rank)
+- Non-Scoring Ranks: [ 13 ] (Remaining Card Rank)
+- Final Scores: [ 3, 5, 2, 13 ] (Scores in order of importance)
 
 ### Comparing hands
 Do this for both player's hands and then compare both arrays, finding the first value that is higher
