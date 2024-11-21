@@ -1,36 +1,27 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Poker Hands Checker
 
-## Getting Started
+## Running the project
 
-First, run the development server:
+`npm install`
+or
+`bun install`
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+then
+`npm run dev`
+or `bun run dev`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## How it works
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Creates a series of scores for a hand in this order:
+1. Rank of hand (example: High card: 1, Straight Flush: 9)
+2. Rank of card(s) in scoring hand (in descending order if more than one)
+3. Rank of card(s) not in scoring hand in descending order
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Example Scoring for a hand of `2H 2D 5S 5C KD`: 
+- Hand Rank: [ 3 ]
+- Scoring Ranks: [ 5, 2 ], 
+- Non-Scoring Ranks: [ 13 ]
+- Final Scores: [ 3, 5, 2, 13 ]
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Comparing hands
+Do this for both player's hands and then compare both arrays, finding the first value that is higher
