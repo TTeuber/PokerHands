@@ -1,25 +1,30 @@
 import { useCallback, useState } from "react";
 
 export default function useCheckWinner() {
-  const [player1Type, setPlayer1Type] = useState<string>("");
-  const [player2Type, setPlayer2Type] = useState<string>("");
-  const [winner, setWinner] = useState<boolean>(false);
+  const [player1HandType, setPlayer1HandType] = useState<string>("");
+  const [player2HandType, setPlayer2HandType] = useState<string>("");
+  const [player1IsWinner, setPlayer1IsWinner] = useState<boolean>(false);
 
   const checkWinner = useCallback((hand1: string[], hand2: string[]) => {
-    const player1Values: number[] = getValues(hand1)!;
-    setPlayer1Type(getHandType(player1Values[0]));
+    const player1Values: number[] = getHandValues(hand1)!;
+    setPlayer1HandType(getHandType(player1Values[0]));
 
-    const player2Values: number[] = getValues(hand2)!;
-    setPlayer2Type(getHandType(player2Values[0]));
+    const player2Values: number[] = getHandValues(hand2)!;
+    setPlayer2HandType(getHandType(player2Values[0]));
 
-    if (checkValues(player1Values, player2Values)) {
-      setWinner(true);
+    if (checkHandScores(player1Values, player2Values)) {
+      setPlayer1IsWinner(true);
     } else {
-      setWinner(false);
+      setPlayer1IsWinner(false);
     }
   }, []);
 
-  return [player1Type, player2Type, winner, checkWinner] as const;
+  return [
+    player1HandType,
+    player2HandType,
+    player1IsWinner,
+    checkWinner,
+  ] as const;
 }
 
 const rankValue = new Map<string, number>([
@@ -78,7 +83,7 @@ function getHandType(value: number) {
 
 class CountMap extends Map<number, number> {}
 
-function getValues(hand: string[]) {
+function getHandValues(hand: string[]) {
   const counts = cardCounts(hand);
   return (
     getRoyalFlush(hand) ||
@@ -94,11 +99,11 @@ function getValues(hand: string[]) {
   );
 }
 
-function checkValues(values1: number[], values2: number[]) {
-  for (let i = 0; i < values1.length; i++) {
-    if (values1[i] > values2[i]) {
+function checkHandScores(scores1: number[], scores2: number[]) {
+  for (let i = 0; i < scores1.length; i++) {
+    if (scores1[i] > scores2[i]) {
       return true;
-    } else if (values1[i] < values2[i]) {
+    } else if (scores1[i] < scores2[i]) {
       return false;
     }
   }

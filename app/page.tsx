@@ -6,16 +6,18 @@ import useCheckWinner from "@/app/utilities/useCheckWinner";
 
 export default function Home() {
   const deck = useRef<string[]>(fullDeck);
-  const [hand1, setHand1] = useState<string[]>([]);
-  const [hand2, setHand2] = useState<string[]>([]);
+  const [player1Hand, setPlayer1Hand] = useState<string[]>([]);
+  const [player2Hand, setPlayer2Hand] = useState<string[]>([]);
 
-  const [player1Type, player2Type, winner, checkWinner] = useCheckWinner();
+  const [player1HandType, player2HandType, player1IsWinner, checkWinner] =
+    useCheckWinner();
 
   const makeHands = useCallback(() => {
     const hand1 = [];
     const hand2 = [];
 
     for (let i = 0; i < 10; i++) {
+      // get random card from deck
       const card =
         deck.current[Math.floor(Math.random() * deck.current.length)];
 
@@ -28,8 +30,8 @@ export default function Home() {
       deck.current = deck.current.filter((c) => c !== card);
     }
 
-    setHand1(hand1);
-    setHand2(hand2);
+    setPlayer1Hand(hand1);
+    setPlayer2Hand(hand2);
   }, []);
 
   useEffect(() => {
@@ -37,8 +39,9 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    checkWinner(hand1, hand2);
-  }, [hand1, hand2]);
+    // check winner whenever hands change
+    checkWinner(player1Hand, player2Hand);
+  }, [player1Hand, player2Hand]);
 
   const reshuffle = useCallback(() => {
     deck.current = fullDeck;
@@ -48,8 +51,18 @@ export default function Home() {
   return (
     <div>
       <h1 className={"text-4xl text-center my-24"}>Poker Hands</h1>
-      <Player name={"Player 1"} hand={hand1} type={player1Type} win={winner} />
-      <Player name={"Player 2"} hand={hand2} type={player2Type} win={!winner} />
+      <Player
+        name={"Player 1"}
+        hand={player1Hand}
+        type={player1HandType}
+        isWinner={player1IsWinner}
+      />
+      <Player
+        name={"Player 2"}
+        hand={player2Hand}
+        type={player2HandType}
+        isWinner={!player1IsWinner}
+      />
       <button
         onClick={reshuffle}
         className={

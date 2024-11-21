@@ -22,8 +22,6 @@ export function Card({ card, index }: { card: string; index: number }) {
       break;
   }
 
-  const [inputting, setInputting] = useState(false);
-
   return (
     <div
       className={`border bg-white ${isRed ? "text-red-800" : "text-black"} text-2xl p-2 aspect-square w-auto h-auto`}

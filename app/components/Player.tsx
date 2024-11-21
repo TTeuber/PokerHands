@@ -4,16 +4,16 @@ export function Player({
   name,
   hand,
   type,
-  win,
+  isWinner,
 }: {
   name: string;
   hand: string[];
   type: string;
-  win: boolean;
+  isWinner: boolean;
 }) {
   return (
     <div
-      className={`${win ? "border-2 border-amber-500" : ""} w-fit mx-auto box-content p-2 my-6`}
+      className={`${isWinner ? "border-2 border-amber-500" : ""} w-fit mx-auto box-content p-2 my-6`}
     >
       <h2 className={"text-2xl text-center my-6"}>
         {name} - {type}
